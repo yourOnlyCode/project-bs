@@ -1,0 +1,7 @@
+This is an ongoing list of abbreviations. When you use an abbreviation as a file or variable name, add the abbreviation to the following list in this format:
+
+Fullword - Abbreviation 
+
+Abbreviations:
+
+Directory - dir

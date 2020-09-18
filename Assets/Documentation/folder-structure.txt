@@ -1,0 +1,47 @@
+
+**** All Files and scripts should be saved as lower-case. Use dashes in between words. 
+
+**** Do not save files in the root directory, everything goes under a sub-directory.
+
+
+
+Assets:		*The root directory
+
+3rd-Party	*Used for 3rd Party Assets (ex. Unity Asset Store)
+
+Animations	*Used for Animations
+
+Documentation	*Used for Documentation, refer to this for standards.
+
+Media		*Used for Media
+--Music
+--SFX
+--Videos
+
+Materials	*Used for Materials
+
+Models		*Used for Models
+
+Plugins		*Used for Plugins
+
+Prefabs		*Used for Prefabs
+
+Resources	*Used for Resources
+
+Textures	*Used for Textures
+
+Sandbox		*Used for testing new Features before implementing them.
+--Jacob		*Jacob's Sandbox
+--Matthew	*Matthew's Sandbox
+--Sam		*Sam's Sandbox
+
+Scenes		*Place Scenes in here
+--Levels	*Level Scenes
+--Other		*Other Scenes (Menu, etc..)
+
+Scripts		*Scripts here
+--Editor	*
+
+Shaders		*Shaders here
+
+Sprites		*Sprites here
