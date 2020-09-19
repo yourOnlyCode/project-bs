@@ -1,4 +1,4 @@
-﻿Naming:
+Naming:
 
     Methods: Each method, for example:
 
@@ -9,8 +9,16 @@
       Should be named in camelCase. Which means that the first letter is lower case, but each word after that starts with an upper case.
         The name should reflect what the method does.
 
-    Variables: Variables should be in camelCase. If it is a temporary variable for a method, use a "p" in front of it, such as "pVariable"
+    Variables: Variables should be in camelCase. 
+	If it is a temporary variable for a method, use a "p" in front of it, such as "pVariable"
         This will show that it is not class wide. The p stands for parameter. The name should reflect the purpose of the variable.
+	If the variable is private put and "_" in front of it. For example:
+
+		private string _thisIsAPrivateVariable;
+		private int _myInteger;
+		
+		public int myPublicInteger;
+		public string myString;
 
 Conventions:
 
