@@ -1,0 +1,33 @@
+﻿Naming:
+
+    Methods: Each method, for example:
+
+        public void thisIsAMethod(string pVariable) {
+
+        }
+
+      Should be named in camelCase. Which means that the first letter is lower case, but each word after that starts with an upper case.
+        The name should reflect what the method does.
+
+    Variables: Variables should be in camelCase. If it is a temporary variable for a method, use a "p" in front of it, such as "pVariable"
+        This will show that it is not class wide. The p stands for parameter. The name should reflect the purpose of the variable.
+
+Conventions:
+
+    Methods: When a piece of code is used more that once, put it in a method so that we reduce the use of duplicate code.
+        The more universal you can make the method, the better.
+        Use private methods unless the method needs to be accessed by another script.
+
+    Variables: Limit public variables to those that need to be accessed by the editor.
+        You can create a public method for setting the variable as well as getting the variable, for example:
+
+            public int getVariable() {
+                return variable;
+            }
+
+            public void setVariable(int pVariable) {
+                variable = pVariable;
+            }
+
+        This will help protect the variables and clean up the code.
+        

@@ -1,5 +1,5 @@
 
-**** All Files and scripts should be saved as lower-case. Use dashes in between words. 
+**** All Files and scripts should be saved as UpperCase: no spaces, and start with a capital letter and each new word has an uppercase letter.
 
 **** Do not save files in the root directory, everything goes under a sub-directory.
 
@@ -40,7 +40,8 @@ Scenes		*Place Scenes in here
 --Other		*Other Scenes (Menu, etc..)
 
 Scripts		*Scripts here
---Editor	*Scripts in this folder will only be for the editor, they will not be build with the project.
+--Editor	*Scripts in this folder will only be for the editor,
+             they will not be build with the project.
 
 Shaders		*Shaders here
 
