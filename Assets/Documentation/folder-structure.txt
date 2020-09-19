@@ -40,7 +40,7 @@ Scenes		*Place Scenes in here
 --Other		*Other Scenes (Menu, etc..)
 
 Scripts		*Scripts here
---Editor	*
+--Editor	*Scripts in this folder will only be for the editor, they will not be build with the project.
 
 Shaders		*Shaders here
 
