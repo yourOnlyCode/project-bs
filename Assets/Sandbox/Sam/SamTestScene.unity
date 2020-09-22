@@ -1237,7 +1237,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155370047
 GameObject:
@@ -1569,7 +1569,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1301552534
 MonoBehaviour:
@@ -1827,6 +1827,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs: []
   otherPlayerPrefab: {fileID: 0}
+  minPlayers: 2
   menuScene: Assets/Sandbox/Sam/SamTestScene.unity
   roomPlayerPrefab: {fileID: 3317449539874088330, guid: b8dea83366323433d921550ef0235323, type: 3}
 --- !u!4 &1394362284
@@ -1888,7 +1889,7 @@ Transform:
   - {fileID: 910994109}
   - {fileID: 1155370052}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1431143885
 GameObject:
