@@ -52,7 +52,7 @@ public class NetworkRoomPlayer : NetworkBehaviour
     public override void OnStartClient()
     {
         Room.roomPlayers.Add(this);
-
+        Room.NotifyPlayersOfReadyState();
         UpdateDisplay();
     }
 
@@ -61,6 +61,7 @@ public class NetworkRoomPlayer : NetworkBehaviour
         Room.roomPlayers.Remove(this);
 
         UpdateDisplay();
+        lobbyUI.SetActive(true);
     }
 
     public void HandleReadyStatusChanged(bool pOldValue, bool pNewValue) => UpdateDisplay();
@@ -107,16 +108,16 @@ public class NetworkRoomPlayer : NetworkBehaviour
     }
 
     [Command]
-    private void CmdReadyUp() {
+    public void CmdReadyUp() {
         isReady = !isReady;
 
         Room.NotifyPlayersOfReadyState();
     }
 
     [Command]
-    private void CmdStartGame() {
+    public void CmdStartGame() {
         if(Room.roomPlayers[0].connectionToClient != connectionToClient) {return;}
 
-        // Start Game
+        Room.StartGame();
     }
 }

@@ -8,26 +8,25 @@ using Mirror;
 
 public class NetworkGameManagerV1 : NetworkManager
 {
-    /// <summary>
-    /// The default prefab to be used to create player objects on the server.
-    /// <para>Player objects are created in the default handler for AddPlayer() on the server. Implementing OnServerAddPlayer overrides this behaviour.</para>
-    /// </summary>
-    [Header("Connected Player Object")]
-    [FormerlySerializedAs("m_ConnectedPrefab")]
-    [Tooltip("Prefab of the other player object. Prefab must have a Network Identity component. May be an empty game object or a full avatar.")]
-    public GameObject otherPlayerPrefab;
-
-    [SerializeField] private int minPlayers = 1;
+    [SerializeField] private int _minPlayers = 1;
 
     [Scene] [SerializeField] private string menuScene = string.Empty;
+    [Scene] [SerializeField] private string playScene = string.Empty;
 
     [Header("Room")]
-    [SerializeField] private NetworkRoomPlayer roomPlayerPrefab = null;
+    [SerializeField] private NetworkRoomPlayer _roomPlayerPrefab = null;
+
+    [Header("Game")]
+    [SerializeField] private NetworkGamePlayer _gamePlayerPrefab = null;
+    [SerializeField] private GameObject _playerSpawnSystem = null;
+
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
+    public static event Action<NetworkConnection> OnServerReadied;
 
-    public List<NetworkRoomPlayer> roomPlayers {get;} = new List<NetworkRoomPlayer>();
+    [SerializeField] public List<NetworkRoomPlayer> roomPlayers {get;} = new List<NetworkRoomPlayer>();
+    [SerializeField] public List<NetworkGamePlayer> gamePlayers { get; } = new List<NetworkGamePlayer>();
 
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 
@@ -45,6 +44,8 @@ public class NetworkGameManagerV1 : NetworkManager
         base.OnClientConnect(conn);
 
         OnClientConnected?.Invoke();
+
+        NotifyPlayersOfReadyState();
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
@@ -52,6 +53,7 @@ public class NetworkGameManagerV1 : NetworkManager
         base.OnClientDisconnect(conn);
 
         OnClientDisconnected?.Invoke();
+        NotifyPlayersOfReadyState();
     }
 
     public override void OnServerConnect(NetworkConnection conn)
@@ -62,7 +64,7 @@ public class NetworkGameManagerV1 : NetworkManager
             return;
         }
 
-        if (SceneManager.GetActiveScene().name != menuScene) {
+        if (SceneManager.GetActiveScene().path != menuScene) {
             conn.Disconnect();
             return;
         }
@@ -82,9 +84,10 @@ public class NetworkGameManagerV1 : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
-        if (SceneManager.GetActiveScene().name == menuScene) {
+        if (SceneManager.GetActiveScene().path == menuScene) {
             bool isLeader = roomPlayers.Count == 0;
-            NetworkRoomPlayer roomPlayerInstance = Instantiate(roomPlayerPrefab);
+            Debug.Log("Spawning Player");
+            NetworkRoomPlayer roomPlayerInstance = Instantiate(_roomPlayerPrefab);
             roomPlayerInstance.IsLeader = isLeader;
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
         }
@@ -96,15 +99,15 @@ public class NetworkGameManagerV1 : NetworkManager
     }
 
     public void NotifyPlayersOfReadyState() {
-        for(int i = 0; i < numPlayers-1; i++) {
+        for(int i = 0; i < roomPlayers.Count; i++) {
             roomPlayers[i].HandleReadyToStart(IsReadyToStart());
         }
     }
 
     private bool IsReadyToStart() {
-        if (numPlayers < minPlayers) {return false;}
+        if (numPlayers < _minPlayers) {return false;}
 
-        for(int i = 0; i < numPlayers - 1; i++) {
+        for(int i = 0; i < roomPlayers.Count; i++) {
             if (!roomPlayers[i].isReady) { return false;}
         }
 
@@ -112,7 +115,50 @@ public class NetworkGameManagerV1 : NetworkManager
 
     }
 
-    public void AddRoomPlayer(NetworkRoomPlayer player) {
-        roomPlayers.Add(player);
+    public void StartGame()
+    {
+        if (SceneManager.GetActiveScene().path == menuScene)
+        {
+            if(!IsReadyToStart()) { return; }
+
+            ServerChangeScene(playScene);
+        }
     }
+
+    public override void ServerChangeScene(string newSceneName)
+    {
+        if(SceneManager.GetActiveScene().path == menuScene)
+        {
+            for (int i = roomPlayers.Count - 1; i >= 0; i-- )
+            {
+                var conn = roomPlayers[i].connectionToClient;
+                var gameplayerInstance = Instantiate(_gamePlayerPrefab);
+                gameplayerInstance.SetDisplayName(roomPlayers[i].displayName);
+
+                NetworkServer.Destroy(conn.identity.gameObject);
+
+                NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject, true); 
+            }
+        }
+
+        base.ServerChangeScene(newSceneName);
+    }
+
+    public override void OnServerReady(NetworkConnection conn)
+    {
+        base.OnServerReady(conn);
+
+        OnServerReadied?.Invoke(conn);
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        Debug.Log(sceneName);
+        if(sceneName == playScene) //TODO: Change this...
+        {
+            GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);
+            NetworkServer.Spawn(playerSpawnSystemInstance);
+        }
+    }
+
 }

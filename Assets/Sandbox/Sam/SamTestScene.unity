@@ -1539,7 +1539,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 9.310487
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1565,7 +1565,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301552530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6189666, y: 3.4299166, z: -12.838804}
+  m_LocalPosition: {x: 0, y: 0, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1822,14 +1822,16 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 374159108046320721, guid: b8dea83366323433d921550ef0235323, type: 3}
+  playerPrefab: {fileID: 46771533903877934, guid: 81f8f52bec41f4c789f55f30b092e18d, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
-  otherPlayerPrefab: {fileID: 0}
-  minPlayers: 2
+  _minPlayers: 1
   menuScene: Assets/Sandbox/Sam/SamTestScene.unity
-  roomPlayerPrefab: {fileID: 3317449539874088330, guid: b8dea83366323433d921550ef0235323, type: 3}
+  playScene: Assets/Sandbox/Sam/SamTestSceneGame.unity
+  _roomPlayerPrefab: {fileID: 3317449539874088330, guid: b8dea83366323433d921550ef0235323, type: 3}
+  _gamePlayerPrefab: {fileID: 495532089750013790, guid: 5eef6abd25c334d46bbac9e3a025d4b6, type: 3}
+  _playerSpawnSystem: {fileID: 7839188033827474550, guid: 7d1cc2df29ce541a5bd021cfcc1d16eb, type: 3}
 --- !u!4 &1394362284
 Transform:
   m_ObjectHideFlags: 0
@@ -1873,7 +1875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d036add45894e1f9ddfe12cfb3eac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkManager: {fileID: 0}
+  networkManager: {fileID: 1394362283}
   landingPagePanel: {fileID: 2101422140}
 --- !u!4 &1414441327
 Transform:
