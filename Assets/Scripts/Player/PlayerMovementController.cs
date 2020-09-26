@@ -75,24 +75,20 @@ public class PlayerMovementController : NetworkBehaviour
     {
         if (GetComponent<NetworkIdentity>().isServer)
         {
-            Debug.Log("This is a Server");
             _serverPosition += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
             // _controller.position = _serverPosition;
         }
         if (GetComponent<NetworkIdentity>().isClient)
         {
-            Debug.Log("This is not a Server");
 
             if (hasAuthority) // If this is the local player.
             {
-                Debug.Log($"{_serverPosition} this item has authority.");
                 Move(); // This will move locally then move on the server to try and reduce lag.
             }
             else // This is not the local player.
             {
                 // Check to see how far the player has moved.
                 Vector2 difference = _serverPosition - _controller.position;
-                Debug.Log($"{hasAuthority} + {difference}");
                 // If the difference is large than smooth the movement, otherwise just set the new position.
                 if (difference.magnitude <= .2)
                 {
@@ -116,7 +112,6 @@ public class PlayerMovementController : NetworkBehaviour
 
         // Over time, the local position might be different than the server position. This will track the difference.
         Vector2 deltaPosition = _controller.position - _serverPosition;
-        Debug.Log(deltaPosition.magnitude);
         // If the difference is too great, reset the local position to match the server position.
         if (deltaPosition.magnitude >= 3)
         {

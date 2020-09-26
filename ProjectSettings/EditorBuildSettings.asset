@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Sandbox/Sam/SamTestScene.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: b3ffdfeb7730246eab6f8cf54071f067
   - enabled: 1
-    path: Assets/Sandbox/Sam/SamTestSceneGame.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 644b813116bc14f46b8a83e3af50cd34
   m_configObjects: {}

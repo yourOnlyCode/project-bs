@@ -86,7 +86,6 @@ public class NetworkGameManagerV1 : NetworkManager
     {
         if (SceneManager.GetActiveScene().path == menuScene) {
             bool isLeader = roomPlayers.Count == 0;
-            Debug.Log("Spawning Player");
             NetworkRoomPlayer roomPlayerInstance = Instantiate(_roomPlayerPrefab);
             roomPlayerInstance.IsLeader = isLeader;
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
@@ -154,7 +153,7 @@ public class NetworkGameManagerV1 : NetworkManager
     public override void OnServerSceneChanged(string sceneName)
     {
         Debug.Log(sceneName);
-        if(sceneName == playScene) //TODO: Change this...
+        if(sceneName == playScene)
         {
             GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);
             NetworkServer.Spawn(playerSpawnSystemInstance);

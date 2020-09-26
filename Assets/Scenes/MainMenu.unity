@@ -1746,8 +1746,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1394362284}
-  - component: {fileID: 1394362283}
   - component: {fileID: 1394362282}
+  - component: {fileID: 1394362283}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1827,10 +1827,10 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs: []
   _minPlayers: 1
-  menuScene: Assets/Sandbox/Sam/SamTestScene.unity
-  playScene: Assets/Sandbox/Sam/SamTestSceneGame.unity
+  menuScene: Assets/Scenes/MainMenu.unity
+  playScene: Assets/Scenes/GameScene.unity
   _roomPlayerPrefab: {fileID: 3317449539874088330, guid: b8dea83366323433d921550ef0235323, type: 3}
-  _gamePlayerPrefab: {fileID: 495532089750013790, guid: 5eef6abd25c334d46bbac9e3a025d4b6, type: 3}
+  _gamePlayerPrefab: {fileID: 8265130922200802555, guid: 5eef6abd25c334d46bbac9e3a025d4b6, type: 3}
   _playerSpawnSystem: {fileID: 7839188033827474550, guid: 7d1cc2df29ce541a5bd021cfcc1d16eb, type: 3}
 --- !u!4 &1394362284
 Transform:

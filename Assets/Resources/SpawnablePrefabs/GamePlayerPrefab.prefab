@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4121898749978794292}
   - component: {fileID: 1111510265857130938}
-  - component: {fileID: 495532089750013790}
+  - component: {fileID: 8265130922200802555}
   m_Layer: 0
-  m_Name: gamePlayer
+  m_Name: GamePlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &495532089750013790
+--- !u!114 &8265130922200802555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Sandbox/Sam/Controls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Resources/InputControls/Controls.inputactions'
 
 using System;
 using System.Collections;
