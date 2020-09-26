@@ -1,0 +1,154 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Mirror;
+
+public class PlayerMovementController : NetworkBehaviour
+{
+    [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private Rigidbody2D _controller = null;
+
+    private Vector2 _previousInput;
+
+    [SyncVar] private Vector2 _serverPosition;
+
+    private Controls _controls;
+
+    private Controls Controls
+    {
+        get
+        {
+            if(_controls != null) { return _controls; }
+
+            return _controls = new Controls();
+        }
+    }
+
+    public override void OnStartAuthority()
+    {
+        enabled = true;
+
+        CmdInitializeServerPosition(_controller.position);
+
+        Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
+        Controls.Player.Move.canceled += ctx => ResetMovement();
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (hasAuthority)
+        {
+            // If this is the local player then enable controls.
+            Controls.Enable();
+        }
+        else
+        {
+            // Otherwise disable the controls.
+            Controls.Disable();
+        }
+    }
+
+    [ClientCallback]
+
+    private void OnEnable()
+    {
+
+    }
+
+    [ClientCallback]
+
+    private void OnDisable()
+    {
+        Controls.Disable();
+    }
+
+    [ClientCallback]
+
+    private void Update()
+    {
+        
+    }
+
+    private void FixedUpdate()
+    {
+        if (GetComponent<NetworkIdentity>().isServer)
+        {
+            Debug.Log("This is a Server");
+            _serverPosition += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
+            // _controller.position = _serverPosition;
+        }
+        if (GetComponent<NetworkIdentity>().isClient)
+        {
+            Debug.Log("This is not a Server");
+
+            if (hasAuthority) // If this is the local player.
+            {
+                Debug.Log($"{_serverPosition} this item has authority.");
+                Move(); // This will move locally then move on the server to try and reduce lag.
+            }
+            else // This is not the local player.
+            {
+                // Check to see how far the player has moved.
+                Vector2 difference = _serverPosition - _controller.position;
+                Debug.Log($"{hasAuthority} + {difference}");
+                // If the difference is large than smooth the movement, otherwise just set the new position.
+                if (difference.magnitude <= .2)
+                {
+                    // Set new position.
+                    _controller.position = _serverPosition;
+                }
+                else
+                {
+                    // Smooth movement
+                    _controller.position += difference * _movementSpeed * Time.fixedDeltaTime;
+                }
+            }
+        }
+    }
+
+    [Client]
+    private void Move()
+    {
+        // This will make the local movement look smoother.
+        _controller.position += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
+
+        // Over time, the local position might be different than the server position. This will track the difference.
+        Vector2 deltaPosition = _controller.position - _serverPosition;
+        Debug.Log(deltaPosition.magnitude);
+        // If the difference is too great, reset the local position to match the server position.
+        if (deltaPosition.magnitude >= 3)
+        {
+            _controller.position = _serverPosition;
+        }
+    }
+
+    [Client]
+    private void SetMovement(Vector2 pMovement)
+    {
+        _previousInput = pMovement.normalized;
+        CmdSetInput(pMovement);
+    }
+
+    [Client]
+    private void ResetMovement()
+    {
+        _previousInput = Vector2.zero;
+        CmdSetInput(Vector2.zero);
+    }
+
+    [Command]
+    private void CmdInitializeServerPosition(Vector2 pTransform)
+    {
+        _serverPosition = pTransform;
+    }
+
+    [Command]
+    private void CmdSetInput(Vector2 pInput)
+    {
+        pInput = pInput.normalized;
+        _previousInput = pInput;
+    }
+
+}
