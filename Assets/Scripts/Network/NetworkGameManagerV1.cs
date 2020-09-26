@@ -9,6 +9,9 @@ using Mirror;
 public class NetworkGameManagerV1 : NetworkManager
 {
     [SerializeField] private int _minPlayers = 1;
+    [SerializeField] private int _finalNumKillers = 1;
+    private int _numKillers = 0;
+    private int _numVillagers = 0;
 
     [Scene] [SerializeField] private string menuScene = string.Empty;
     [Scene] [SerializeField] private string playScene = string.Empty;
@@ -118,6 +121,7 @@ public class NetworkGameManagerV1 : NetworkManager
     {
         if (SceneManager.GetActiveScene().path == menuScene)
         {
+            _numVillagers = numPlayers - _numKillers;
             if(!IsReadyToStart()) { return; }
 
             ServerChangeScene(playScene);
@@ -158,6 +162,44 @@ public class NetworkGameManagerV1 : NetworkManager
             GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);
             NetworkServer.Spawn(playerSpawnSystemInstance);
         }
+    }
+
+    public void AddGamePlayer(NetworkGamePlayer pGamePlayer)
+    {
+        int numLeft = numPlayers - (_numKillers + _numVillagers);
+
+        if(_numKillers == _finalNumKillers)
+        {
+            pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_VILLAGER);
+            _numVillagers++;
+        } else
+        {
+            float killChance = 1f / numLeft;
+            if(UnityEngine.Random.Range(0f,1f) > killChance)
+            {
+                pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_VILLAGER);
+                _numVillagers++;
+            } else
+            {
+                pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_KILLER);
+                _numKillers++;
+            }
+        }
+
+        gamePlayers.Add(pGamePlayer);
+    }
+
+    public void RemoveGamePlayer(NetworkGamePlayer pGamePlayer)
+    {
+        if (pGamePlayer.GetPlayerInfo().GetPlayerRole() == PlayerInformation.ROLE_KILLER)
+        {
+            _numKillers--;
+        } else
+        {
+            _numVillagers--;
+        }
+
+        gamePlayers.Remove(pGamePlayer);
     }
 
 }

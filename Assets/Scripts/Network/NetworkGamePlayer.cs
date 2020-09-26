@@ -12,6 +12,9 @@ public class NetworkGamePlayer : NetworkBehaviour
     [SyncVar]
     private string _displayName = "Loading...";
 
+    [SerializeField] private PlayerInformation _playerInfo = null;
+
+
     private NetworkGameManagerV1 room;
 
     private NetworkGameManagerV1 Room {
@@ -27,8 +30,9 @@ public class NetworkGamePlayer : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        Debug.Log("Start Client");
         DontDestroyOnLoad(gameObject);
-        Room.gamePlayers.Add(this);
+        Room.AddGamePlayer(this);
     }
 
     public override void OnNetworkDestroy()
@@ -40,5 +44,11 @@ public class NetworkGamePlayer : NetworkBehaviour
     public void SetDisplayName(string pDisplayName)
     {
         this._displayName = pDisplayName;
+    }
+
+    [Server]
+    public PlayerInformation GetPlayerInfo()
+    {
+        return _playerInfo;
     }
 }
