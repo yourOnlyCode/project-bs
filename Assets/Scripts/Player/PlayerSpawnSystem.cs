@@ -33,6 +33,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
     [Server]
     public void SpawnPlayer(NetworkConnection conn)
     {
+        
         Transform spawnPoint = _spawnPoints.ElementAtOrDefault(_nextIndex);
 
         if(spawnPoint == null)
@@ -42,6 +43,8 @@ public class PlayerSpawnSystem : NetworkBehaviour
         }
 
         GameObject playerInstance = Instantiate(_playerPrefab, _spawnPoints[_nextIndex].position, _spawnPoints[_nextIndex].rotation);
+        // Connect the Network Player with the GameObject Player
+        conn.clientOwnedObjects.ToArray()[0].GetComponent<NetworkGamePlayer>().SetPlayerGameObject(playerInstance);
         NetworkServer.Spawn(playerInstance, conn);
 
         _nextIndex++;

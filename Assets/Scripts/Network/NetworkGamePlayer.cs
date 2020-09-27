@@ -14,6 +14,7 @@ public class NetworkGamePlayer : NetworkBehaviour
 
     [SerializeField] private PlayerInformation _playerInfo = null;
 
+    [SerializeField]private GameObject _playerGameObject = null;
 
     private NetworkGameManagerV1 room;
 
@@ -50,5 +51,17 @@ public class NetworkGamePlayer : NetworkBehaviour
     public PlayerInformation GetPlayerInfo()
     {
         return _playerInfo;
+    }
+
+    [Server]
+    public void SetPlayerGameObject(GameObject pPlayer)
+    {
+        pPlayer.GetComponent<PlayerGameObject>().SetOwner(this);
+        _playerGameObject = pPlayer;
+    }
+
+    public GameObject getPlayerGameObject()
+    {
+        return _playerGameObject;
     }
 }

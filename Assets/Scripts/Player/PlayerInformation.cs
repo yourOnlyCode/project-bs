@@ -15,19 +15,19 @@ public class PlayerInformation : NetworkBehaviour
     [SyncVar] private string _playerRole = string.Empty; // killer or villager 
     [SyncVar] private string _status = "alive"; // alive, dead, or ghost
 
+
+    // Future TODO: Inventory Tracking, health?, other information about the player.
+
     [Server]
     public void SetPlayerRole(string pPlayerRole)
     {
         _playerRole = pPlayerRole;
-        Debug.Log(_playerRole);
-        Debug.Log("set Player Role");
     }
 
     [Server]
     public void SetStatus(string pStatus)
     {
         _status = pStatus;
-        Debug.Log(_status);
     }
 
     public string GetPlayerRole()

@@ -137,6 +137,7 @@ public class PlayerMovementController : NetworkBehaviour
     private void CmdInitializeServerPosition(Vector2 pTransform)
     {
         _serverPosition = pTransform;
+        // Debug.Log(this.GetComponent<PlayerGameObject>().GetPlayerInformation().GetPlayerRole());
     }
 
     [Command]
