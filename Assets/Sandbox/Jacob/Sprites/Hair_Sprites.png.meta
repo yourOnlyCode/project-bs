@@ -1,7 +1,25 @@
 fileFormatVersion: 2
 guid: 5245ba2c6e48d2b4d9052e0ccf6e36e3
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -228725007628933160
+    second: Hair_Sprites_0
+  - first:
+      213: 7826357889379618451
+    second: Hair_Sprites_1
+  - first:
+      213: -6486877210147083776
+    second: Hair_Sprites_2
+  - first:
+      213: 3236838535173675938
+    second: Hair_Sprites_3
+  - first:
+      213: 3365194232099926069
+    second: Hair_Sprites_4
+  - first:
+      213: 3157929104858074342
+    second: Hair_Sprites_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,7 +59,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -73,9 +91,147 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Hair_Sprites_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 768
+        width: 313
+        height: 219
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d7670141d763dcf0800000000000000
+      internalID: -228725007628933160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hair_Sprites_1
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 755
+        width: 369
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39e4c89d80fcc9c60800000000000000
+      internalID: 7826357889379618451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hair_Sprites_2
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 347
+        width: 343
+        height: 384
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a2b9bdb8bf9f5a0800000000000000
+      internalID: -6486877210147083776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hair_Sprites_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 427
+        width: 321
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ab925c8f7f8bec20800000000000000
+      internalID: 3236838535173675938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hair_Sprites_4
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 69
+        width: 334
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5307284135293be20800000000000000
+      internalID: 3365194232099926069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hair_Sprites_5
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 85
+        width: 267
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eccee81ac733db20800000000000000
+      internalID: 3157929104858074342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
