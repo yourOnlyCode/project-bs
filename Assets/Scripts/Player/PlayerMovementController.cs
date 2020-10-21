@@ -7,6 +7,7 @@ public class PlayerMovementController : NetworkBehaviour
 {
     [SerializeField] private float _movementSpeed = 5f;
     [SerializeField] private Rigidbody2D _controller = null;
+    [SerializeField] private PlayerAnimationController _animationController = null;
 
     private Vector2 _previousInput;
 
@@ -77,6 +78,25 @@ public class PlayerMovementController : NetworkBehaviour
         {
             _serverPosition += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
             // _controller.position = _serverPosition;
+            if(_previousInput.sqrMagnitude > 0)
+            {
+                _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION);
+            }
+            else
+            {
+                _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION);
+            }
+
+            if (_previousInput.x < 0)
+            {
+                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+            }
+            else if(_previousInput.x > 0)
+            {
+
+                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+            }
+
         }
         if (GetComponent<NetworkIdentity>().isClient)
         {
@@ -100,6 +120,25 @@ public class PlayerMovementController : NetworkBehaviour
                     // Smooth movement
                     _controller.position += difference * _movementSpeed * Time.fixedDeltaTime;
                 }
+
+                if (difference.sqrMagnitude > 0)
+                {
+                    _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION);
+                } else
+                {
+                    _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION);
+                }
+
+                if (difference.x < 0)
+                {
+                    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+                }
+                else if (difference.x > 0)
+                {
+
+                    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+                }
+
             }
         }
     }
@@ -116,6 +155,24 @@ public class PlayerMovementController : NetworkBehaviour
         if (deltaPosition.magnitude >= 3)
         {
             _controller.position = _serverPosition;
+        }
+
+        if (_previousInput.sqrMagnitude > 0)
+        {
+            _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION);
+            if (_previousInput.x < 0)
+            {
+                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+            }
+            else if (_previousInput.x > 0)
+            {
+
+                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+            }
+        }
+        else
+        {
+            _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION);
         }
     }
 

@@ -14,7 +14,7 @@ public class NetworkGamePlayer : NetworkBehaviour
 
     [SerializeField] private PlayerInformation _playerInfo = null;
 
-    [SerializeField]private GameObject _playerGameObject = null;
+    [SerializeField] private GameObject _playerGameObject = null;
 
     private NetworkGameManagerV1 room;
 
@@ -34,6 +34,7 @@ public class NetworkGamePlayer : NetworkBehaviour
         Debug.Log("Start Client");
         DontDestroyOnLoad(gameObject);
         Room.AddGamePlayer(this);
+        Debug.Log("Finish Start Client");
     }
 
     public override void OnNetworkDestroy()
@@ -50,6 +51,11 @@ public class NetworkGamePlayer : NetworkBehaviour
     [Server]
     public PlayerInformation GetPlayerInfo()
     {
+        if(_playerInfo == null)
+        {
+            _playerInfo = gameObject.AddComponent<PlayerInformation>();
+        }
+
         return _playerInfo;
     }
 
