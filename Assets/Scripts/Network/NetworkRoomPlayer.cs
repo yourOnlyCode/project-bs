@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class NetworkRoomPlayer : NetworkBehaviour
 {
+
+
+    [SerializeField] private SelectHair _hairSpriteSelector = null;
+
     [Header("UI")]
     [SerializeField] private GameObject lobbyUI = null;
     [SerializeField] private TMP_Text[] _playerNameTexts = new TMP_Text[4];
@@ -119,5 +123,10 @@ public class NetworkRoomPlayer : NetworkBehaviour
         if(Room.roomPlayers[0].connectionToClient != connectionToClient) {return;}
 
         Room.StartGame();
+    }
+
+    public Sprite GetSelectedSprite()
+    {
+        return _hairSpriteSelector.GetSelectedHair();
     }
 }

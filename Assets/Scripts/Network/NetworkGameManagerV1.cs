@@ -137,6 +137,7 @@ public class NetworkGameManagerV1 : NetworkManager
                 var conn = roomPlayers[i].connectionToClient;
                 var gameplayerInstance = Instantiate(_gamePlayerPrefab);
                 gameplayerInstance.SetDisplayName(roomPlayers[i].displayName);
+                gameplayerInstance.SetHairSprite(roomPlayers[i].GetSelectedSprite()); // Set Hair Sprite here.
 
                 NetworkServer.Destroy(conn.identity.gameObject);
 

@@ -645,6 +645,10 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Extent.y
       value: 0.5601594
       objectReference: {fileID: 0}
+    - target: {fileID: 5204858442036320636, guid: 350b510eadfaf497dbb6c2a1ecd14ae3, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5814080183821571984, guid: 350b510eadfaf497dbb6c2a1ecd14ae3, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0

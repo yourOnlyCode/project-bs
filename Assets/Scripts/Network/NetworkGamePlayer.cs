@@ -16,6 +16,9 @@ public class NetworkGamePlayer : NetworkBehaviour
 
     [SerializeField] private GameObject _playerGameObject = null;
 
+    private Sprite _selectedHair = null;
+
+
     private NetworkGameManagerV1 room;
 
     private NetworkGameManagerV1 Room {
@@ -64,10 +67,16 @@ public class NetworkGamePlayer : NetworkBehaviour
     {
         pPlayer.GetComponent<PlayerGameObject>().SetOwner(this);
         _playerGameObject = pPlayer;
+        _playerGameObject.GetComponent<PlayerAnimationController>().SetPlayerHair(_selectedHair);
     }
 
     public GameObject getPlayerGameObject()
     {
         return _playerGameObject;
+    }
+
+    public void SetHairSprite(Sprite _hairSprite)
+    {
+        _selectedHair = _hairSprite;
     }
 }
