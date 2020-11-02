@@ -137,7 +137,7 @@ public class NetworkGameManagerV1 : NetworkManager
                 var conn = roomPlayers[i].connectionToClient;
                 var gameplayerInstance = Instantiate(_gamePlayerPrefab);
                 gameplayerInstance.SetDisplayName(roomPlayers[i].displayName);
-                gameplayerInstance.SetHairSprite(roomPlayers[i].GetSelectedSprite()); // Set Hair Sprite here.
+                // Set Selected Sprite here.
 
                 NetworkServer.Destroy(conn.identity.gameObject);
 
@@ -157,7 +157,6 @@ public class NetworkGameManagerV1 : NetworkManager
 
     public override void OnServerSceneChanged(string sceneName)
     {
-        Debug.Log(sceneName);
         if(sceneName == playScene)
         {
             GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);

@@ -9,13 +9,12 @@ using UnityEngine.UI;
 public class NetworkRoomPlayer : NetworkBehaviour
 {
 
-
-    [SerializeField] private SelectHair _hairSpriteSelector = null;
-
     [Header("UI")]
     [SerializeField] private GameObject lobbyUI = null;
     [SerializeField] private TMP_Text[] _playerNameTexts = new TMP_Text[4];
     [SerializeField] private TMP_Text[] _playerReadyTexts = new TMP_Text[4];
+    [SerializeField] private Image[] _playerCharacterImages = new Image[4];
+    [SerializeField] private Image _playerCharacterLargeImage = null;
     [SerializeField] private Button startGameButton = null;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
@@ -125,8 +124,9 @@ public class NetworkRoomPlayer : NetworkBehaviour
         Room.StartGame();
     }
 
-    public Sprite GetSelectedSprite()
+    public Image[] GetCharacterImages()
     {
-        return _hairSpriteSelector.GetSelectedHair();
+        return _playerCharacterImages;
     }
+
 }

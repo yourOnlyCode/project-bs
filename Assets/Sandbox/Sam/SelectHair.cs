@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class SelectHair : MonoBehaviour
+public class SelectHair : NetworkBehaviour
 {
     [SerializeField] private Sprite[] _hairOptions = null;
     [SerializeField] private Image _hairImage = null;
+    [SerializeField] private NetworkRoomPlayer _player = null;
     private int _hairSelected = 0;
 
     
@@ -41,6 +43,7 @@ public class SelectHair : MonoBehaviour
     private void ChangeHair()
     {
         _hairImage.sprite = _hairOptions[_hairSelected];
+        // Set selected hair
     }
 
     public Sprite GetSelectedHair()
