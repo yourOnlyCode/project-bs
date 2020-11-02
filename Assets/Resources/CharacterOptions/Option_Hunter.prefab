@@ -93,6 +93,7 @@ MonoBehaviour:
   _characterName: Hunter
   _characterDescription: This is the hunter character. Take a good look, because
     it may be the only time you see him.
+  _bigImage: {fileID: 8625259836574381877, guid: 5c34d3c3697b34b54b2a9ebf5745c7d4, type: 3}
 --- !u!114 &-725345338921758119
 MonoBehaviour:
   m_ObjectHideFlags: 0

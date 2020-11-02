@@ -17,7 +17,6 @@ public class NetworkGamePlayer : NetworkBehaviour
     [SerializeField] private GameObject _playerGameObject = null;
 
 
-
     private NetworkGameManagerV1 room;
 
     private NetworkGameManagerV1 Room {
@@ -42,6 +41,11 @@ public class NetworkGamePlayer : NetworkBehaviour
     public override void OnNetworkDestroy()
     {
         Room.gamePlayers.Remove(this);
+    }
+
+    public void Update()
+    {
+
     }
 
     [Server]
@@ -72,5 +76,7 @@ public class NetworkGamePlayer : NetworkBehaviour
     {
         return _playerGameObject;
     }
+
+
 
 }

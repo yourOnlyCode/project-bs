@@ -16,11 +16,16 @@ public class NetworkRoomPlayer : NetworkBehaviour
     [SerializeField] private Image[] _playerCharacterImages = new Image[4];
     [SerializeField] private Image _playerCharacterLargeImage = null;
     [SerializeField] private Button startGameButton = null;
+    [SerializeField] private CharacterSelection _characterSelection = null;
+
+    private Sprite[] _characterSprites = null;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string displayName = "Loading...";
     [SyncVar(hook = nameof(HandleReadyStatusChanged))]
     public bool isReady = false;
+    [SyncVar(hook = nameof(HandleCharacterSelectionChanged))]
+    public int characterIndex = -1;
 
     private bool isLeader;
 
@@ -69,11 +74,12 @@ public class NetworkRoomPlayer : NetworkBehaviour
 
     public void HandleReadyStatusChanged(bool pOldValue, bool pNewValue) => UpdateDisplay();
     public void HandleDisplayNameChanged(string pOldValue, string pNewValue) => UpdateDisplay();
+    public void HandleCharacterSelectionChanged(int pOldValue, int pNewValue) => UpdateDisplay();
 
     private void UpdateDisplay() {
 
         if(!hasAuthority) {
-            for (int i=0; i<Room.roomPlayers.Count-1;i++) {
+            for (int i=0; i<Room.roomPlayers.Count;i++) {
                 if (Room.roomPlayers[i].hasAuthority) {
                     Room.roomPlayers[i].UpdateDisplay();
                     break;
@@ -87,6 +93,7 @@ public class NetworkRoomPlayer : NetworkBehaviour
         for(int i=0; i < _playerNameTexts.Length; i++) {
             _playerNameTexts[i].text = "Waiting for player...";
             _playerReadyTexts[i].text = string.Empty;
+            _playerCharacterImages[i].sprite = null;
         }
 
         for(int i = 0; i < Room.roomPlayers.Count; i++) {
@@ -94,6 +101,11 @@ public class NetworkRoomPlayer : NetworkBehaviour
             _playerReadyTexts[i].text = Room.roomPlayers[i].isReady ?
                 "<color=green>Ready</color>" :
                 "<color=red>Not Ready</color>";
+            if (Room.roomPlayers[i].characterIndex > -1)
+            {
+                Image charImage = _characterSelection.GetCharacterOptions()[Room.roomPlayers[i].characterIndex].transform.GetChild(0).GetComponent<Image>();
+                _playerCharacterImages[i].sprite = charImage.sprite;
+            }
         }
 
     }
@@ -127,6 +139,17 @@ public class NetworkRoomPlayer : NetworkBehaviour
     public Image[] GetCharacterImages()
     {
         return _playerCharacterImages;
+    }
+
+    [Command]
+    public void CmdSetCharacterIndex(int pIndex)
+    {
+        characterIndex = pIndex;
+    }
+
+    public int GetCharacterIndex()
+    {
+        return characterIndex;
     }
 
 }

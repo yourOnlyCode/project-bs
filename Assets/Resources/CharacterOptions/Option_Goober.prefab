@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterName: Goober
   _characterDescription: The Goober. What else can I say?
+  _bigImage: {fileID: 21300000, guid: 018954594d040354d8b1ed9b8a632078, type: 3}
 --- !u!114 &-725345338921758119
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -347,8 +347,10 @@ MonoBehaviour:
   - {fileID: 3245499201288678941}
   _playerCharacterLargeImage: {fileID: 3248688750876014914}
   startGameButton: {fileID: 2378097431257796184}
+  _characterSelection: {fileID: 1661202636389750386}
   displayName: Loading...
   isReady: 0
+  characterIndex: -1
 --- !u!1 &844780375661357666
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6858404625925981657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -970,7 +972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6947255790232258514
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1196,7 +1198,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _characterInitializedOptions: []
+  _networkPlayer: {fileID: 3317449539874088330}
   _characterOptions: []
+  _selectedColor: {r: 0.9716981, g: 0.18792273, b: 0.18792273, a: 0.65882355}
+  _notSelectedColor: {r: 0, g: 0, b: 0, a: 0.3529412}
+  _bigImage: {fileID: 3248688750876014914}
+  _title: {fileID: 1906600590619094212}
+  _description: {fileID: 4122769068700418618}
 --- !u!1 &4680004153499882648
 GameObject:
   m_ObjectHideFlags: 0
