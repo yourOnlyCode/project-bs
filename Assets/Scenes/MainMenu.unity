@@ -1827,9 +1827,10 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs: []
   _minPlayers: 1
+  _finalNumKillers: 1
   menuScene: Assets/Scenes/MainMenu.unity
   playScene: Assets/Scenes/GameScene.unity
-  _roomPlayerPrefab: {fileID: 3317449539874088330, guid: b8dea83366323433d921550ef0235323, type: 3}
+  _roomPlayerPrefab: {fileID: 3317449539874088330, guid: fc463f56b891140ab8600300b0b2d871, type: 3}
   _gamePlayerPrefab: {fileID: 8265130922200802555, guid: 5eef6abd25c334d46bbac9e3a025d4b6, type: 3}
   _playerSpawnSystem: {fileID: 7839188033827474550, guid: 7d1cc2df29ce541a5bd021cfcc1d16eb, type: 3}
 --- !u!4 &1394362284

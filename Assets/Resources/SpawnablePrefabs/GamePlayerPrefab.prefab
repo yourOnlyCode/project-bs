@@ -64,6 +64,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _playerInfo: {fileID: -2628633038654426403}
+  _playerGameObject: {fileID: 0}
 --- !u!114 &-2628633038654426403
 MonoBehaviour:
   m_ObjectHideFlags: 0

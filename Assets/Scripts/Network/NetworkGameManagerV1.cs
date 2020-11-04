@@ -137,6 +137,7 @@ public class NetworkGameManagerV1 : NetworkManager
                 var conn = roomPlayers[i].connectionToClient;
                 var gameplayerInstance = Instantiate(_gamePlayerPrefab);
                 gameplayerInstance.SetDisplayName(roomPlayers[i].displayName);
+                // Set Selected Sprite here.
 
                 NetworkServer.Destroy(conn.identity.gameObject);
 
@@ -156,7 +157,6 @@ public class NetworkGameManagerV1 : NetworkManager
 
     public override void OnServerSceneChanged(string sceneName)
     {
-        Debug.Log(sceneName);
         if(sceneName == playScene)
         {
             GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);
@@ -166,24 +166,27 @@ public class NetworkGameManagerV1 : NetworkManager
 
     public void AddGamePlayer(NetworkGamePlayer pGamePlayer)
     {
-        int numLeft = numPlayers - (_numKillers + _numVillagers);
+        if (pGamePlayer.isServer) {
+            int numLeft = numPlayers - (_numKillers + _numVillagers);
 
-        if(_numKillers == _finalNumKillers)
-        {
-            pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_VILLAGER);
-            _numVillagers++;
-        } else
-        {
-            float killChance = 1f / numLeft;
-            if(UnityEngine.Random.Range(0f,1f) > killChance)
+            if (_numKillers == _finalNumKillers)
             {
                 pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_VILLAGER);
                 _numVillagers++;
             } else
             {
-                pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_KILLER);
-                _numKillers++;
+                float killChance = 1f / numLeft;
+                if (UnityEngine.Random.Range(0f, 1f) > killChance)
+                {
+                    pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_VILLAGER);
+                    _numVillagers++;
+                } else
+                {
+                    pGamePlayer.GetPlayerInfo().SetPlayerRole(PlayerInformation.ROLE_KILLER);
+                    _numKillers++;
+                }
             }
+            Debug.Log(pGamePlayer.GetPlayerInfo().GetPlayerRole());
         }
 
         gamePlayers.Add(pGamePlayer);
