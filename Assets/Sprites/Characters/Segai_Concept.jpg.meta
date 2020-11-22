@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 5c34d3c3697b34b54b2a9ebf5745c7d4
+guid: 30a2abd181f69d74482a98710b263ce1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8625259836574381877
-    second: Hunter_Head_Big
+      213: -9181872546359624051
+    second: Segai_small
   - first:
-      213: 7903380526305607711
-    second: Hunter_Head_Small
+      213: -4455741728531667488
+    second: Segai_Big
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -95,32 +95,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hunter_Head_Big
+      name: Segai_small
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 144
-        width: 1200
-        height: 1400
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 537b57e6f1413b770800000000000000
-      internalID: 8625259836574381877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hunter_Head_Small
-      rect:
-        serializedVersion: 2
-        x: 263
-        y: 546
+        x: 252
+        y: 526
         width: 128
         height: 128
       alignment: 0
@@ -130,8 +109,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f108f2bf6b27ead60800000000000000
-      internalID: 7903380526305607711
+      spriteID: d8eb255119f639080800000000000000
+      internalID: -9181872546359624051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Segai_Big
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 5
+        width: 1200
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e52cf361860a22c0800000000000000
+      internalID: -4455741728531667488
       vertices: []
       indices: 
       edges: []

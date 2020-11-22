@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2387791513854365741}
   - component: {fileID: -725345338921758119}
   m_Layer: 0
-  m_Name: Option_Goober
+  m_Name: Option_Segai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,9 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005db85ca550442f99add60a50f2404f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterName: Goober
-  _characterDescription: The Goober. What else can I say?
-  _bigImage: {fileID: 21300000, guid: 018954594d040354d8b1ed9b8a632078, type: 3}
+  _characterName: Segai
+  _characterDescription: Segai, mage character. Crafty little bugger.
+  _bigImage: {fileID: -4455741728531667488, guid: 30a2abd181f69d74482a98710b263ce1, type: 3}
 --- !u!114 &-725345338921758119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,11 +113,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.33333334}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.7882353}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_DisabledColor: {r: 1, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1487609012782493971, guid: 350b510eadfaf497dbb6c2a1ecd14ae3, type: 3}
+  m_Sprite: {fileID: -9181872546359624051, guid: 30a2abd181f69d74482a98710b263ce1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
