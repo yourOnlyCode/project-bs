@@ -8,6 +8,10 @@ public class PlayerMovementController : NetworkBehaviour
     [SerializeField] private float _movementSpeed = 5f;
     [SerializeField] private Rigidbody2D _controller = null;
     [SerializeField] private PlayerAnimationController _animationController = null;
+    [SerializeField] private GameObject _Equipment = null;
+
+    private List<GameObject> _currentCollisions = null;
+    private GameObject _equippedItem = null;
 
     private Vector2 _previousInput;
 
@@ -20,9 +24,14 @@ public class PlayerMovementController : NetworkBehaviour
         get
         {
             if(_controls != null) { return _controls; }
-
             return _controls = new Controls();
         }
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        _currentCollisions = new List<GameObject>();
     }
 
     public override void OnStartAuthority()
@@ -30,9 +39,11 @@ public class PlayerMovementController : NetworkBehaviour
         enabled = true;
 
         CmdInitializeServerPosition(_controller.position);
-
+        _currentCollisions = new List<GameObject>();
         Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
         Controls.Player.Move.canceled += ctx => ResetMovement();
+        Controls.Player.Pickup.performed += ctx => PickupItem();
+        Controls.Player.Attack.performed += ctx => CmdUseEquipment();
     }
 
     public override void OnStartClient()
@@ -246,6 +257,70 @@ public class PlayerMovementController : NetworkBehaviour
         }
 
         return facingDirection;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(_currentCollisions != null)
+        {
+            _currentCollisions.Add(collision.gameObject);
+            Debug.Log(collision);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(_currentCollisions != null && _currentCollisions.Contains(collision.gameObject))
+        {
+            _currentCollisions.Remove(collision.gameObject);
+        }
+    }
+
+    [Command]
+    private void CmdUseEquipment()
+    {
+        if(_equippedItem != null)
+        {
+            _equippedItem.GetComponent<EquipableItems>().Swing();
+        }
+    }
+
+    [Client]
+    private void PickupItem() // todo: handle if multiple equipable items are near.
+    {
+        for(int i = 0; i < _currentCollisions.Count; i++)
+        {
+            if(_currentCollisions[i].layer == 9)
+            {
+                _currentCollisions[i].transform.parent = _Equipment.transform;
+                _equippedItem = _currentCollisions[i];
+                CmdPickupItem(_equippedItem.name);
+                _equippedItem.layer = 10;
+            }
+        }
+    }
+
+    [ClientRpc]
+    private void RpcDropItem(bool drop)
+    {
+        Debug.Log(drop);
+    }
+
+    [Command]
+    private void CmdPickupItem(string name)
+    {
+        bool pickup = false;
+        for (int i = 0; i < _currentCollisions.Count; i++)
+        {
+            if (_currentCollisions[i].layer == 9 && _currentCollisions[i].name == name)
+            {
+                _currentCollisions[i].transform.parent = _Equipment.transform;
+                _equippedItem = _currentCollisions[i];
+                _equippedItem.layer = 10;
+                pickup = true;
+            }
+        }
+        RpcDropItem(pickup);
     }
 
 }
