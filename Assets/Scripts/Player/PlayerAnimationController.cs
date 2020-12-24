@@ -22,7 +22,7 @@ public class PlayerAnimationController : NetworkBehaviour
 
     public void SetPlayerHair(Sprite pSprite)
     {
-        _hair.sprite = pSprite;
+        // _hair.sprite = pSprite;
     }
 
     public void Awake()

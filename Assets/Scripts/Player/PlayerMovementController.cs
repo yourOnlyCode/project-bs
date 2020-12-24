@@ -80,7 +80,7 @@ public class PlayerMovementController : NetworkBehaviour
 
             _controller.position += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
             _serverPosition = _controller.position;
-            int facingDirection = getDirection(_previousInput);
+            int facingDirection = getDirection(_previousInput.normalized);
             // _controller.position = _serverPosition;
             if(_previousInput.sqrMagnitude > 0)
             {
@@ -101,7 +101,7 @@ public class PlayerMovementController : NetworkBehaviour
                 _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
             }
 
-        }
+        } else
         if (GetComponent<NetworkIdentity>().isClient)
         {
 
@@ -218,7 +218,7 @@ public class PlayerMovementController : NetworkBehaviour
     private int getDirection(Vector2 direction)
     {
         int facingDirection;
-        if (_previousInput.sqrMagnitude == 0)
+        if (direction.sqrMagnitude == 0)
         {
             facingDirection = -1;
         }
