@@ -74,27 +74,31 @@ public class PlayerMovementController : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        Debug.DrawRay(_serverPosition, _previousInput.normalized, Color.red);
         if (GetComponent<NetworkIdentity>().isServer)
         {
-            _serverPosition += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
+
+            _controller.position += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
+            _serverPosition = _controller.position;
+            int facingDirection = getDirection(_previousInput);
             // _controller.position = _serverPosition;
             if(_previousInput.sqrMagnitude > 0)
             {
-                _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION);
+                _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION, facingDirection);
             }
             else
             {
-                _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION);
+                _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION, facingDirection);
             }
 
             if (_previousInput.x < 0)
             {
-                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
             }
             else if(_previousInput.x > 0)
             {
 
-                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
             }
 
         }
@@ -121,22 +125,25 @@ public class PlayerMovementController : NetworkBehaviour
                     _controller.position += difference * _movementSpeed * Time.fixedDeltaTime;
                 }
 
+                int facingDirection = getDirection(difference);
+
+
                 if (difference.sqrMagnitude > 0)
                 {
-                    _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION);
+                    _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION, facingDirection);
                 } else
                 {
-                    _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION);
+                    _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION, facingDirection);
                 }
 
                 if (difference.x < 0)
                 {
-                    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+                    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
                 }
                 else if (difference.x > 0)
                 {
 
-                    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+                    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
                 }
 
             }
@@ -157,22 +164,24 @@ public class PlayerMovementController : NetworkBehaviour
             _controller.position = _serverPosition;
         }
 
+        int facingDirection = getDirection(_previousInput);
+
         if (_previousInput.sqrMagnitude > 0)
         {
-            _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION);
+            _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION, facingDirection);
             if (_previousInput.x < 0)
             {
-                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
             }
             else if (_previousInput.x > 0)
             {
 
-                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
             }
         }
         else
         {
-            _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION);
+            _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION, facingDirection);
         }
     }
 
@@ -194,6 +203,8 @@ public class PlayerMovementController : NetworkBehaviour
     private void CmdInitializeServerPosition(Vector2 pTransform)
     {
         _serverPosition = pTransform;
+
+
         // Debug.Log(this.GetComponent<PlayerGameObject>().GetPlayerInformation().GetPlayerRole());
     }
 
@@ -202,6 +213,39 @@ public class PlayerMovementController : NetworkBehaviour
     {
         pInput = pInput.normalized;
         _previousInput = pInput;
+    }
+
+    private int getDirection(Vector2 direction)
+    {
+        int facingDirection;
+        if (_previousInput.sqrMagnitude == 0)
+        {
+            facingDirection = -1;
+        }
+        else if (direction.x * direction.x > direction.y * direction.y)
+        {
+            if (direction.x < 0)
+            {
+                facingDirection = PlayerAnimationController.LEFT;
+            }
+            else
+            {
+                facingDirection = PlayerAnimationController.RIGHT;
+            }
+        }
+        else
+        {
+            if (direction.y < 0)
+            {
+                facingDirection = PlayerAnimationController.DOWN;
+            }
+            else
+            {
+                facingDirection = PlayerAnimationController.UP;
+            }
+        }
+
+        return facingDirection;
     }
 
 }
