@@ -11,10 +11,18 @@ public class EquipableItems : NetworkBehaviour
     private static int _BACKWARD = 1;
     private static int _RESET = 2;
 
+    public static int AXE = 0;
+    public static int PICKAXE = 1;
+    public static int FISHING_ROD = 2;
+
 
     [SerializeField] private Transform _handlePosition;
     [SerializeField] private BoxCollider2D _collider;
+    [SerializeField] private int _type = 0;
+    [SerializeField] private bool _useRandom = false;
+    [SerializeField] private float _randomProbability = 1f;
 
+    private Collider2D _randomSpawner;
     private bool _animate = false;
     private float _rotateSpeed = 5f;
     private int _animationState = _FORWARD;
@@ -40,8 +48,13 @@ public class EquipableItems : NetworkBehaviour
         {
             if(collisions[i].gameObject.layer == 11)
             {
-                Debug.Log("Spawn Item!");
-                collisions[i].gameObject.GetComponent<HarvestItems>().InstantiateMaterial(transform.position);
+                if (!_useRandom)
+                {
+                    collisions[i].gameObject.GetComponent<HarvestItems>().InstantiateMaterial(_type);
+                } else
+                {
+                    _randomSpawner = collisions[i];
+                }
             }
         }
 
@@ -71,6 +84,10 @@ public class EquipableItems : NetworkBehaviour
                 if (Math.Abs(transform.rotation.z) >= .5)
                 {
                     _animationState = _BACKWARD;
+                    if(_useRandom)
+                    {
+                        _animate = false;
+                    }
                 }
             } else if(_animationState == _BACKWARD)
             {
@@ -89,6 +106,14 @@ public class EquipableItems : NetworkBehaviour
 
             
 
+        } else if(_useRandom && _animationState == _BACKWARD && GetComponent<NetworkIdentity>().isServer)
+        {
+            if(UnityEngine.Random.Range(0f, 1f) <= _randomProbability)
+            {
+                _randomSpawner.gameObject.GetComponent<HarvestItems>().InstantiateMaterial(_type);
+                _animate = true;
+                RpcSwing();
+            }
         }
         
     }
