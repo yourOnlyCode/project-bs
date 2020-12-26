@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EquipableItems : NetworkBehaviour
 {
@@ -32,8 +33,18 @@ public class EquipableItems : NetworkBehaviour
         _serverPosition = transform.position;
     }
 
-    public void Swing()
+    [Server]
+    public void Swing(Collider2D[] collisions)
     {
+        for(int i = 0; i < collisions.Length; i++)
+        {
+            if(collisions[i].gameObject.layer == 11)
+            {
+                Debug.Log("Spawn Item!");
+                collisions[i].gameObject.GetComponent<HarvestItems>().InstantiateMaterial(transform.position);
+            }
+        }
+
         _animate = true;
         RpcSwing();
         Debug.Log("Animate!");
@@ -51,7 +62,7 @@ public class EquipableItems : NetworkBehaviour
 
         if (_animate)
         {
-            Debug.Log(transform.rotation);
+            //Debug.Log(transform.rotation);
           
 
             if(_animationState == _FORWARD)
@@ -85,7 +96,10 @@ public class EquipableItems : NetworkBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Debug.Log(collision.gameObject);
-        itemsHit.Add(collision.gameObject);
+        if (!itemsHit.Contains(collision.gameObject))
+        {
+            itemsHit.Add(collision.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -100,6 +114,33 @@ public class EquipableItems : NetworkBehaviour
     private void RpcSwing()
     {
         _animate = true;
+    }
+
+    [Server]
+    public void ServerPickup()
+    {
+        gameObject.layer = 10;
+        RpcPickup();
+    }
+
+    [ClientRpc]
+    private void RpcPickup()
+    {
+        gameObject.layer = 10;
+    }
+
+    [Server]
+    public void ServerDrop()
+    {
+        gameObject.layer = 9;
+        RpcDrop();
+
+    }
+
+    [ClientRpc]
+    private void RpcDrop()
+    {
+        gameObject.layer = 9;
     }
 
 

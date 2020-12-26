@@ -12,9 +12,10 @@ public class PlayerMovementController : NetworkBehaviour
 
     private List<GameObject> _currentCollisions = null;
     private GameObject _equippedItem = null;
+    private GameObject _carriedItem = null;
 
     private Vector2 _previousInput;
-
+    [SyncVar] private Vector2 _facingDirection;
     [SyncVar] private Vector2 _serverPosition;
 
     private Controls _controls;
@@ -42,7 +43,8 @@ public class PlayerMovementController : NetworkBehaviour
         _currentCollisions = new List<GameObject>();
         Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
         Controls.Player.Move.canceled += ctx => ResetMovement();
-        Controls.Player.Pickup.performed += ctx => PickupItem();
+        Controls.Player.Pickup.performed += ctx => CmdPickupItem();
+        Controls.Player.Drop.performed += ctx => CmdDropAllItems();
         Controls.Player.Attack.performed += ctx => CmdUseEquipment();
     }
 
@@ -85,12 +87,18 @@ public class PlayerMovementController : NetworkBehaviour
 
     private void FixedUpdate()
     {
+
+        //Debug.Log(_currentCollisions.Count);
         Debug.DrawRay(_serverPosition, _previousInput.normalized, Color.red);
         if (GetComponent<NetworkIdentity>().isServer)
         {
 
             _controller.position += _previousInput.normalized * _movementSpeed * Time.fixedDeltaTime;
             _serverPosition = _controller.position;
+            if(_previousInput.sqrMagnitude != 0)
+            {
+                _facingDirection = _previousInput.normalized;
+            }
             int facingDirection = getDirection(_previousInput.normalized);
             // _controller.position = _serverPosition;
             if(_previousInput.sqrMagnitude > 0)
@@ -115,7 +123,6 @@ public class PlayerMovementController : NetworkBehaviour
         } else
         if (GetComponent<NetworkIdentity>().isClient)
         {
-
             if (hasAuthority) // If this is the local player.
             {
                 Move(); // This will move locally then move on the server to try and reduce lag.
@@ -261,17 +268,23 @@ public class PlayerMovementController : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(_currentCollisions != null)
+        if(_currentCollisions != null && !_currentCollisions.Contains(collision.gameObject))
         {
             _currentCollisions.Add(collision.gameObject);
-            Debug.Log(collision);
+            if (GetComponent<NetworkIdentity>().isServer)
+            {
+                // Debug.Log(collision);
+            }
+            // Debug.Log("Entered");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // Debug.Log(collision);
         if(_currentCollisions != null && _currentCollisions.Contains(collision.gameObject))
         {
+            // Debug.Log("removed");
             _currentCollisions.Remove(collision.gameObject);
         }
     }
@@ -281,46 +294,73 @@ public class PlayerMovementController : NetworkBehaviour
     {
         if(_equippedItem != null)
         {
-            _equippedItem.GetComponent<EquipableItems>().Swing();
-        }
-    }
-
-    [Client]
-    private void PickupItem() // todo: handle if multiple equipable items are near.
-    {
-        for(int i = 0; i < _currentCollisions.Count; i++)
-        {
-            if(_currentCollisions[i].layer == 9)
-            {
-                _currentCollisions[i].transform.parent = _Equipment.transform;
-                _equippedItem = _currentCollisions[i];
-                CmdPickupItem(_equippedItem.name);
-                _equippedItem.layer = 10;
-            }
+            Collider2D[] hit2D = Physics2D.OverlapBoxAll(_controller.position + _facingDirection, new Vector2(1f, 1f), 0f);
+            Debug.DrawRay(_controller.position, _facingDirection, Color.red);
+            // Debug.Log(hit2D);
+            _equippedItem.GetComponent<EquipableItems>().Swing(hit2D);
         }
     }
 
     [ClientRpc]
-    private void RpcDropItem(bool drop)
+    private void RpcDropItem(bool pickup)
     {
-        Debug.Log(drop);
+        Debug.Log(pickup);
+        Debug.Log(_carriedItem);
+        Debug.Log(_equippedItem);
     }
 
     [Command]
-    private void CmdPickupItem(string name)
+    private void CmdPickupItem()
     {
         bool pickup = false;
         for (int i = 0; i < _currentCollisions.Count; i++)
-        {
-            if (_currentCollisions[i].layer == 9 && _currentCollisions[i].name == name)
+        { 
+            if (_currentCollisions[i].layer == 9) // Equipment
             {
-                _currentCollisions[i].transform.parent = _Equipment.transform;
-                _equippedItem = _currentCollisions[i];
-                _equippedItem.layer = 10;
-                pickup = true;
+                if (!_equippedItem)
+                {
+                    _currentCollisions[i].transform.parent = _Equipment.transform;
+                    _equippedItem = _currentCollisions[i].gameObject;
+                    _equippedItem.GetComponent<EquipableItems>().ServerPickup();
+                    pickup = true;
+                   
+                    // RpcPickupItem(_equippedItem.GetComponent<NetworkIdentity>().netId);
+                    break;
+                }
+            } else if(_currentCollisions[i].layer == 12) // Material
+            {
+                if (!_carriedItem)
+                {
+                    _currentCollisions[i].transform.parent = _Equipment.transform;
+                    _carriedItem = _currentCollisions[i].gameObject;
+                    _carriedItem.GetComponent<Material>().ServerPickup();
+                    pickup = true;
+                    break;
+                }
             }
         }
         RpcDropItem(pickup);
+    }
+
+    [Command]
+    private void CmdDropAllItems()
+    {
+
+        foreach(Transform child in _Equipment.transform)
+        {
+            child.parent = null;
+            if(child.gameObject.layer == 10)
+            {
+                child.gameObject.GetComponent<EquipableItems>().ServerDrop();
+            }
+            else if (child.gameObject.layer == 13)
+            {
+                child.gameObject.GetComponent<Material>().ServerDrop();
+                child.gameObject.GetComponent<Material>().SpawnItem(child.position, new Vector3(_facingDirection.x, _facingDirection.y).normalized*1.5f);
+            }
+        }
+        _equippedItem = null;
+        _carriedItem = null;
     }
 
 }
