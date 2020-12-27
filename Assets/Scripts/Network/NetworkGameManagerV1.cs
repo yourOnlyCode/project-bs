@@ -125,6 +125,7 @@ public class NetworkGameManagerV1 : NetworkManager
             if(!IsReadyToStart()) { return; }
 
             ServerChangeScene(playScene);
+
         }
     }
 
@@ -146,6 +147,7 @@ public class NetworkGameManagerV1 : NetworkManager
         }
 
         base.ServerChangeScene(newSceneName);
+
     }
 
     public override void OnServerReady(NetworkConnection conn)

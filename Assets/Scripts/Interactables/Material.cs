@@ -6,12 +6,17 @@ using UnityEngine;
 public class Material : NetworkBehaviour
 {
     [SerializeField] private float _bounceHeight = 3f;
+    [SerializeField] private int _materialType;
 
     private bool _spawnAnimation = false;
     private Vector3 _initialPos;
     private Vector3 _spawnPosition;
     private Vector3 _spawnOffset;
     private Vector3 _animationProgress;
+
+    private float _movementSpeed = 5f;
+
+    private GameObject _storageContainer;
 
     [SyncVar]
     private Vector3 _serverPosition;
@@ -20,6 +25,25 @@ public class Material : NetworkBehaviour
     void Start()
     {
 
+    }
+
+    private void Update()
+    {
+        if(!GetComponent<NetworkIdentity>().isServer)
+        {
+            if (!_spawnAnimation)
+            {
+                Vector3 distance = _serverPosition - transform.position;
+                if (distance.magnitude < .05f)
+                {
+                    transform.position = _serverPosition;
+                }
+                else
+                {
+                    transform.position += distance.normalized * 5f * Time.deltaTime;
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -50,12 +74,6 @@ public class Material : NetworkBehaviour
         if(GetComponent<NetworkIdentity>().isServer)
         {
             _serverPosition = transform.position;
-        } else
-        {
-            if (!_spawnAnimation)
-            {
-                transform.position = _serverPosition;
-            }
         }
     }
 
@@ -84,6 +102,8 @@ public class Material : NetworkBehaviour
     [Server]
     public void ServerPickup()
     {
+
+        GetComponent<BoxCollider2D>().enabled = false;
         gameObject.layer = 13;
         RpcPickup();
     }
@@ -91,13 +111,17 @@ public class Material : NetworkBehaviour
     [ClientRpc]
     private void RpcPickup()
     {
+
+        GetComponent<BoxCollider2D>().enabled = false;
         gameObject.layer = 13;
+
     }
 
     [Server]
     public void ServerDrop()
     {
         gameObject.layer = 12;
+        GetComponent<BoxCollider2D>().enabled = true;
         RpcDrop();
 
     }
@@ -106,5 +130,11 @@ public class Material : NetworkBehaviour
     private void RpcDrop()
     {
         gameObject.layer = 12;
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public int GetMaterialType()
+    {
+        return _materialType;
     }
 }

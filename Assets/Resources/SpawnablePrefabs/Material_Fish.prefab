@@ -116,6 +116,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _bounceHeight: 1
+  _materialType: 2
 --- !u!61 &-999485859108575818
 BoxCollider2D:
   m_ObjectHideFlags: 0

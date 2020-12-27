@@ -62,15 +62,27 @@ public class EquipableItems : NetworkBehaviour
         RpcSwing();
         Debug.Log("Animate!");
     }
+    private void Update()
+    {
+        if (!GetComponent<NetworkIdentity>().isServer)
+        {
+            Vector3 distance = new Vector3(_serverPosition.x, _serverPosition.y) - transform.position;
+            if (distance.magnitude < .05f)
+            {
+                transform.position = _serverPosition;
+            }
+            else
+            {
+                transform.position += distance.normalized * 5f * Time.deltaTime;
+            }
+        }
+    }
 
     private void FixedUpdate()
     {
         if(GetComponent<NetworkIdentity>().isServer)
         {
             _serverPosition = transform.position;
-        } else
-        {
-            transform.position = _serverPosition;
         }
 
         if (_animate)

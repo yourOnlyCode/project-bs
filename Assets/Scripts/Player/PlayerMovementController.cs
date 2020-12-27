@@ -38,7 +38,7 @@ public class PlayerMovementController : NetworkBehaviour
     public override void OnStartAuthority()
     {
         enabled = true;
-
+        tag = "Player";
         CmdInitializeServerPosition(_controller.position);
         _currentCollisions = new List<GameObject>();
         Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
@@ -177,9 +177,18 @@ public class PlayerMovementController : NetworkBehaviour
         // Over time, the local position might be different than the server position. This will track the difference.
         Vector2 deltaPosition = _controller.position - _serverPosition;
         // If the difference is too great, reset the local position to match the server position.
-        if (deltaPosition.magnitude >= 3)
+        if (deltaPosition.magnitude >= .5f)
         {
-            _controller.position = _serverPosition;
+            if (deltaPosition.magnitude >= 2f)
+            {
+                _controller.position = _serverPosition;
+            } else
+            {
+                if(_previousInput.magnitude == 0)
+                {
+                    _controller.position -= deltaPosition.normalized * _movementSpeed * Time.fixedDeltaTime;
+                }
+            }
         }
 
         int facingDirection = getDirection(_previousInput);
@@ -271,10 +280,6 @@ public class PlayerMovementController : NetworkBehaviour
         if(_currentCollisions != null && !_currentCollisions.Contains(collision.gameObject))
         {
             _currentCollisions.Add(collision.gameObject);
-            if (GetComponent<NetworkIdentity>().isServer)
-            {
-                // Debug.Log(collision);
-            }
             // Debug.Log("Entered");
         }
     }
@@ -304,9 +309,6 @@ public class PlayerMovementController : NetworkBehaviour
     [ClientRpc]
     private void RpcDropItem(bool pickup)
     {
-        Debug.Log(pickup);
-        Debug.Log(_carriedItem);
-        Debug.Log(_equippedItem);
     }
 
     [Command]
@@ -339,7 +341,7 @@ public class PlayerMovementController : NetworkBehaviour
                 }
             }
         }
-        RpcDropItem(pickup);
+        // RpcDropItem(pickup);
     }
 
     [Command]
