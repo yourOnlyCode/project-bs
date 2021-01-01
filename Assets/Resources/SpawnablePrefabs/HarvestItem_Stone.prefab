@@ -111,18 +111,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4472836437477283352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 760f63217e0d540d992f1bfe7b9d8622, type: 3}
+  m_Script: {fileID: 11500000, guid: 61b19c4441ac84772bafaa25db6dc532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _harvestMaterial: {fileID: 5321385154467376112, guid: 95aa17e7d5ced42f3a43ef445c416298, type: 3}
+  _harvestMaterial: {fileID: 5321385154467376112, guid: 503c61297a3e949f689badb69923e978, type: 3}
   _spawnPosition: {fileID: 6271093086468157154}
   _deadSprite: {fileID: 0}
   _launchDistance: 2.5
   _hitsPerMat: 2
   _maxHits: 8
-  _type: 1
+  _equipmentType: 1
 --- !u!61 &3300019873768142799
 BoxCollider2D:
   m_ObjectHideFlags: 0

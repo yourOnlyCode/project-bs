@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using static Constants;
+using System;
 
 public class StorageManager : NetworkBehaviour
 {
+
     public static int NUMBER_OF_INVENTORY_TYPES = 3;
-    public static int WOOD = 0;
-    public static int STONE = 1;
-    public static int FISH = 2;
 
 
     [SerializeField] private GameObject _storageContainerPrefab;
 
     private List<GameObject> _storageContainers;
-    private SyncListInt _inventory = new SyncListInt();
+    private SyncDictionary<ITEMS, int> _inventory = new SyncDictionary<ITEMS, int>();
 
     [Server]
     override public void OnStartServer()
     {
-        for(int i = 0; i < NUMBER_OF_INVENTORY_TYPES; i++)
-        {
-            _inventory.Add(0);
-        }
+        // ORDER MATTERS
+        _inventory.Add(ITEMS.Wood, 0);
+        _inventory.Add(ITEMS.Stone, 0);
+        _inventory.Add(ITEMS.Fish, 0);
+        
 
         GetAllStorageContainers();
     }
@@ -53,18 +54,18 @@ public class StorageManager : NetworkBehaviour
     }
 
     [Server]
-    public void AddInventory(int pType)
+    public void AddInventory(ITEMS pType)
     {
         _inventory[pType] += 1;
     }
 
     [Server]
-    public void RemoveInventory(int pType)
+    public void RemoveInventory(ITEMS pType)
     {
         _inventory[pType] -= 1;
     }
     
-    public SyncList<int> GetInventory()
+    public SyncDictionary<ITEMS,int> GetInventory()
     {
         return _inventory;
     }
@@ -89,7 +90,7 @@ public class StorageManager : NetworkBehaviour
     }
 
 
-    private void InventoryChanged(SyncList<int>.Operation op, int index, int pOld, int pNew)
+    private void InventoryChanged(SyncDictionary<ITEMS, int>.Operation op, ITEMS key, int item)
     {
         for (int i = 0; i < _storageContainers.Count; i++)
         {
@@ -99,5 +100,6 @@ public class StorageManager : NetworkBehaviour
             }
         }
     }
+
 
 }

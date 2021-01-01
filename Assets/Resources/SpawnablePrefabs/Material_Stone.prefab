@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8123949420292227522}
   - component: {fileID: 775990139576626024}
   - component: {fileID: 3031546494978469800}
-  - component: {fileID: -896946322908031722}
   - component: {fileID: -999485859108575818}
+  - component: {fileID: 8433613116145581518}
   m_Layer: 12
   m_Name: Material_Stone
   m_TagString: Untagged
@@ -101,22 +101,6 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &-896946322908031722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5321385154467376112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8c25f9324e7c415190fc23fc65888ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _bounceHeight: 1
-  _materialType: 1
 --- !u!61 &-999485859108575818
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,3 +127,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7026773, y: 0.620337}
   m_EdgeRadius: 0
+--- !u!114 &8433613116145581518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5321385154467376112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f016bf1589c4a4ac58eb3f33eeb0dbb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _bounceHeight: 1
+  _materialDetails: {fileID: 11400000, guid: d000644ecc50c47f1bdda2101ac2fa5e, type: 2}

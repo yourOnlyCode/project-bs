@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7419897515743370345}
   - component: {fileID: 3922045949076049102}
-  - component: {fileID: 7170806822278665794}
   - component: {fileID: 3146571260608094756}
   - component: {fileID: 1519683803381590200}
+  - component: {fileID: 3924600261042235621}
   m_Layer: 9
   m_Name: Equipable_FishingRod
   m_TagString: Untagged
@@ -86,25 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7170806822278665794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831549907599381003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f232f5b5465a40079e40d8048184008, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _handlePosition: {fileID: 5945421963502747526}
-  _collider: {fileID: 3146571260608094756}
-  _type: 2
-  _useRandom: 1
-  _randomProbability: 0.1
 --- !u!61 &3146571260608094756
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -147,6 +128,23 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &3924600261042235621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831549907599381003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef997c993c6e84abdbe725ab8dfe29e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _handlePosition: {fileID: 5945421963502747526}
+  _equipableDetails: {fileID: 11400000, guid: 33048c962305e410db185ba76d26720b, type: 2}
+  _randomProbability: 0.1
 --- !u!1 &7692687413859752847
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,7 +64,7 @@ public class NetworkRoomPlayer : NetworkBehaviour
         UpdateDisplay();
     }
 
-    public override void OnNetworkDestroy()
+    public override void OnStopClient()
     {
         Room.roomPlayers.Remove(this);
 

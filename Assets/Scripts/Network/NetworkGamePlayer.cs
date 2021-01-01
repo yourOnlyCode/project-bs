@@ -38,7 +38,7 @@ public class NetworkGamePlayer : NetworkBehaviour
         Debug.Log("Finish Start Client");
     }
 
-    public override void OnNetworkDestroy()
+    public override void OnStopClient()
     {
         Room.gamePlayers.Remove(this);
     }

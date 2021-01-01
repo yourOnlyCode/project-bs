@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using static Constants;
 
 public class StorageArea : NetworkBehaviour
 {
 
     private StorageManager _storageManager;
-    private int[] _inventory = new int[StorageManager.NUMBER_OF_INVENTORY_TYPES];
+    private Dictionary<ITEMS, int> _inventory = new Dictionary<ITEMS, int>() {
+        
+        {ITEMS.Wood , 0 },
+        { ITEMS.Stone , 0 },
+        {ITEMS.Fish, 0 }
+    };
 
     private UIGenerator ui;
 
@@ -33,7 +39,7 @@ public class StorageArea : NetworkBehaviour
         {
             if (collision.gameObject.layer == 12)
             {
-                int type = collision.gameObject.GetComponent<Material>().GetMaterialType();
+                ITEMS type = collision.gameObject.GetComponent<Material>().GetMaterialType();
                 _inventory[type] += 1;
                 _storageManager.AddInventory(type);
             }
@@ -55,7 +61,7 @@ public class StorageArea : NetworkBehaviour
         {
             if (collision.gameObject.layer == 12)
             {
-                int type = collision.gameObject.GetComponent<Material>().GetMaterialType();
+                ITEMS type = collision.gameObject.GetComponent<Material>().GetMaterialType();
                 _inventory[type] -= 1;
                 _storageManager.RemoveInventory(type);
             }
@@ -76,12 +82,12 @@ public class StorageArea : NetworkBehaviour
     }
 
     [Server]
-    public int[] GetInventory()
+    public Dictionary<ITEMS,int> GetInventory()
     {
         return _inventory;
     }
 
-    public void DataChanged(SyncList<int> pData)
+    public void DataChanged(SyncDictionary<ITEMS, int> pData)
     {
         if(ui.IsUIOpen())
         {

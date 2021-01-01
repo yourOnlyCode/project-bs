@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using static Constants;
 
 public class UIGenerator : MonoBehaviour
 {
@@ -40,13 +41,17 @@ public class UIGenerator : MonoBehaviour
         }
     }
 
-    public void PushData(SyncList<int> pData)
+    public void PushData(SyncDictionary<ITEMS, int> pData)
     {
         List<TMP_Text> textFields = _instance.GetComponent<UIDataFields>().GetTextFields();
+        IDictionaryEnumerator enumerator = pData.GetEnumerator();
+        enumerator.MoveNext();
         for(int i = 0; i < textFields.Count; i++)
         {
-            textFields[i].SetText(pData[i].ToString());
+            textFields[i].SetText(enumerator.Value.ToString());
+            enumerator.MoveNext();
         }
+        
     }
 
     public bool IsUIOpen()

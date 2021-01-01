@@ -133,10 +133,9 @@ namespace Mirror.Websocket
             client.Connect(uri);
         }
 
-        public override bool ClientSend(int channelId, ArraySegment<byte> segment)
+        public override void ClientSend(int channelId, ArraySegment<byte> segment)
         {
             client.Send(segment);
-            return true;
         }
 
         public override void ClientDisconnect() => client.Disconnect();
@@ -171,12 +170,9 @@ namespace Mirror.Websocket
             _ = server.Listen(port);
         }
 
-        public override bool ServerSend(List<int> connectionIds, int channelId, ArraySegment<byte> segment)
+        public override void ServerSend(int connectionId, int channelId, ArraySegment<byte> segment)
         {
-            // send to all
-            foreach (int connectionId in connectionIds)
                 server.Send(connectionId, segment);
-            return true;
         }
 
         public override bool ServerDisconnect(int connectionId)
