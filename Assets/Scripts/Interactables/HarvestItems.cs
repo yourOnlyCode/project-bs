@@ -24,7 +24,6 @@ public class HarvestItems : NetworkBehaviour
     [Server]
     public void InstantiateMaterial(ITEMS pEquipmentType) // todo: could add a hit increase as a parameter for better equipment.
     {
-        Debug.Log(pEquipmentType);
         if (_equipmentType == pEquipmentType)
         {
             if (_hitCount < _maxHits || _maxHits == 0)

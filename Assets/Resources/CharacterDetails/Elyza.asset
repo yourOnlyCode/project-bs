@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d693c1c9d8f4cafae9ddde690dc613, type: 3}
+  m_Name: Elyza
+  m_EditorClassIdentifier: 
+  characterAnimations:
+  - animationType: 0
+    animation: {fileID: 7400000, guid: 5ac15dc26390a4d1f8d67d19e8154a2f, type: 2}
+  - animationType: 1
+    animation: {fileID: 7400000, guid: 8b199c81480bc431a9c933d5cdf5d07e, type: 2}
+  - animationType: 2
+    animation: {fileID: 7400000, guid: 51639a719dc06454abd11711c87b595a, type: 2}
+  - animationType: 3
+    animation: {fileID: 7400000, guid: 72b39f6e945c04e428c075a1db50e286, type: 2}

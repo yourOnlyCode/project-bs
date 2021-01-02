@@ -14,7 +14,14 @@ public static class Constants
         Fish
     };
 
-
+    [Serializable]
+    public enum CHARACTER_ANIMATIONS
+    {
+        Still_R,
+        Still_L,
+        Walk_R,
+        Walk_L
+    }
 
 
 }

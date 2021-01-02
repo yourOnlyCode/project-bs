@@ -110,15 +110,15 @@ public class PlayerMovementController : NetworkBehaviour
                 _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION, facingDirection);
             }
 
-            if (_previousInput.x < 0)
-            {
-                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
-            }
-            else if(_previousInput.x > 0)
-            {
+            //if (_previousInput.x < 0)
+            //{
+            //    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+            //}
+            //else if(_previousInput.x > 0)
+            //{
 
-                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
-            }
+            //    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+            //}
 
         } else
         if (GetComponent<NetworkIdentity>().isClient)
@@ -154,15 +154,15 @@ public class PlayerMovementController : NetworkBehaviour
                     _animationController.setAnimation(PlayerAnimationController.IDLE_ANIMATION, facingDirection);
                 }
 
-                if (difference.x < 0)
-                {
-                    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
-                }
-                else if (difference.x > 0)
-                {
+                //if (difference.x < 0)
+                //{
+                //    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+                //}
+                //else if (difference.x > 0)
+                //{
 
-                    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
-                }
+                //    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+                //}
 
             }
         }
@@ -196,15 +196,15 @@ public class PlayerMovementController : NetworkBehaviour
         if (_previousInput.sqrMagnitude > 0)
         {
             _animationController.setAnimation(PlayerAnimationController.WALK_ANIMATION, facingDirection);
-            if (_previousInput.x < 0)
-            {
-                _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
-            }
-            else if (_previousInput.x > 0)
-            {
+            //if (_previousInput.x < 0)
+            //{
+            //    _controller.transform.localScale = new Vector3(-1f, _controller.transform.localScale.y);
+            //}
+            //else if (_previousInput.x > 0)
+            //{
 
-                _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
-            }
+            //    _controller.transform.localScale = new Vector3(1f, _controller.transform.localScale.y);
+            //}
         }
         else
         {
@@ -244,35 +244,39 @@ public class PlayerMovementController : NetworkBehaviour
 
     private int getDirection(Vector2 direction)
     {
-        int facingDirection;
-        if (direction.sqrMagnitude == 0)
+        int facingRight;
+        if (direction.x > 0)
         {
-            facingDirection = -1;
-        }
-        else if (direction.x * direction.x > direction.y * direction.y)
+            facingRight = 1;
+        } else if (direction.x < 0)
         {
-            if (direction.x < 0)
-            {
-                facingDirection = PlayerAnimationController.LEFT;
-            }
-            else
-            {
-                facingDirection = PlayerAnimationController.RIGHT;
-            }
-        }
-        else
+            facingRight = 0;
+        } else
         {
-            if (direction.y < 0)
-            {
-                facingDirection = PlayerAnimationController.DOWN;
-            }
-            else
-            {
-                facingDirection = PlayerAnimationController.UP;
-            }
+            facingRight = -1;
         }
+            //if (direction.x < 0)
+            //{
+        //        facingRight = PlayerAnimationController.LEFT;
+        //    }
+        //    else
+        //    {
+        //        facingRight = PlayerAnimationController.RIGHT;
+        //    }
+        //}
+        //else
+        //{
+        //    if (direction.y < 0)
+        //    {
+        //        facingRight = PlayerAnimationController.DOWN;
+        //    }
+        //    else
+        //    {
+        //        facingRight = PlayerAnimationController.UP;
+        //    }
+        //}
 
-        return facingDirection;
+        return facingRight;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

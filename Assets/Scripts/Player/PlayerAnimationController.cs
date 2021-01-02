@@ -9,28 +9,45 @@ public class PlayerAnimationController : NetworkBehaviour
     public static int IDLE_ANIMATION = 0;
     public static int WALK_ANIMATION = 1;
 
-    public static int UP = 0;
-    public static int RIGHT = 1;
-    public static int DOWN = 2;
-    public static int LEFT = 1;
-
-
-    [SerializeField] private SpriteRenderer _hair = null;
-    [SerializeField] private SpriteRenderer _weapon = null;
-    [SerializeField] private GameObject _bones = null;
     [SerializeField] private Animator _animator = null;
 
-    public void SetPlayerHair(Sprite pSprite)
+    private AnimatorOverrideController _animatorOverrideController;
+
+    public void Start()
     {
-        // _hair.sprite = pSprite;
+        InitializeOverrideAnimator();
+    
     }
 
-    public void Awake()
+    public void SetAnimations(List<CharacterAnimation> pCharacterAnimations)
     {
-        _weapon.sprite = null;
+        InitializeOverrideAnimator();
+        if (_animatorOverrideController)
+        {
+            for (int i = 0; i < pCharacterAnimations.Count; i++)
+            {
+                _animatorOverrideController[pCharacterAnimations[i].animationType.ToString()] = pCharacterAnimations[i].animation;
+             
+            }
+
+        } else
+        {
+            Debug.LogError("Override Controller not initialized");
+        }
     }
 
-    public void setAnimation(int pAnimation, int pDirection)
+    private void InitializeOverrideAnimator()
+    {
+        if(_animatorOverrideController)
+        {
+            return;
+        }
+        _animatorOverrideController = new AnimatorOverrideController(_animator.runtimeAnimatorController);
+        _animator.runtimeAnimatorController = _animatorOverrideController;
+
+    }
+
+    public void setAnimation(int pAnimation, int pRight)
     {
         if (pAnimation == IDLE_ANIMATION) {
             _animator.SetBool("IsWalking", false);
@@ -38,9 +55,10 @@ public class PlayerAnimationController : NetworkBehaviour
         {
             _animator.SetBool("IsWalking", true);
         }
-        if (pDirection != -1)
+        if (pRight >= 0)
         {
-            _animator.SetInteger("Direction", pDirection);
+            _animator.SetBool("Right", pRight>0);
         }
+        
     }
 }

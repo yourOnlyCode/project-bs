@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System.Linq;
 
 public class PlayerInformation : NetworkBehaviour
 {
@@ -14,7 +15,9 @@ public class PlayerInformation : NetworkBehaviour
 
     [SyncVar] private string _playerRole = string.Empty; // killer or villager 
     [SyncVar] private string _status = "alive"; // alive, dead, or ghost
-
+    [SyncVar] private string _characterName;
+    // private CharacterDetailObject _character;
+    
 
     // Future TODO: Inventory Tracking, health?, other information about the player.
 
@@ -30,6 +33,12 @@ public class PlayerInformation : NetworkBehaviour
         _status = pStatus;
     }
 
+    [Server]
+    public void SetCharacterName(string pCharacterName)
+    {
+        _characterName = pCharacterName;
+    }
+
     public string GetPlayerRole()
     {
         return _playerRole;
@@ -38,6 +47,11 @@ public class PlayerInformation : NetworkBehaviour
     public string GetStatus()
     {
         return _status;
+    }
+
+    public string GetCharacterName()
+    {
+        return _characterName;
     }
 
 

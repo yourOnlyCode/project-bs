@@ -37,7 +37,6 @@ public class EquipableItems : NetworkBehaviour
         {
             if (collisions[i].gameObject.layer == 11) // TODO: Get rid of magic number;
             {
-                // TODO: Implement new item enum.
                 SpawnMaterial(collisions[i].gameObject.GetComponent<HarvestItems>());
             }
         }

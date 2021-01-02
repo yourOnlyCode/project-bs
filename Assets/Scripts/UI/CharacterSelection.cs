@@ -60,7 +60,7 @@ public class CharacterSelection : NetworkBehaviour
                 _bigImage.sprite = character.GetBigImage();
                 _description.text = character.GetCharacterDescription();
                 _title.text = character.GetCharacterName();
-                _networkPlayer.CmdSetCharacterIndex(_selectedID);
+                _networkPlayer.CmdSetCharacterIndex(_selectedID, character.GetCharacterName());
             }
         }
 

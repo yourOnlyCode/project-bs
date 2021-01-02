@@ -26,6 +26,8 @@ public class NetworkRoomPlayer : NetworkBehaviour
     public bool isReady = false;
     [SyncVar(hook = nameof(HandleCharacterSelectionChanged))]
     public int characterIndex = -1;
+    [SyncVar]
+    public string characterName;
 
     private bool isLeader;
 
@@ -142,14 +144,20 @@ public class NetworkRoomPlayer : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSetCharacterIndex(int pIndex)
+    public void CmdSetCharacterIndex(int pIndex, string pCharacterName)
     {
         characterIndex = pIndex;
+        characterName = pCharacterName;
     }
 
     public int GetCharacterIndex()
     {
         return characterIndex;
+    }
+
+    public string GetCharacterName()
+    {
+        return characterName;
     }
 
 }

@@ -68,7 +68,9 @@ public class NetworkGamePlayer : NetworkBehaviour
     [Server]
     public void SetPlayerGameObject(GameObject pPlayer)
     {
+        //TODO: This is where I am currently syncing data from player info to client players.
         pPlayer.GetComponent<PlayerGameObject>().SetOwner(this);
+        pPlayer.GetComponent<PlayerCharacterDetails>().SetCharacter(GetPlayerInfo().GetCharacterName());
         _playerGameObject = pPlayer;
     }
 

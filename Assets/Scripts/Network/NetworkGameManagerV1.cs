@@ -138,7 +138,9 @@ public class NetworkGameManagerV1 : NetworkManager
                 var conn = roomPlayers[i].connectionToClient;
                 var gameplayerInstance = Instantiate(_gamePlayerPrefab);
                 gameplayerInstance.SetDisplayName(roomPlayers[i].displayName);
-                // Set Selected Sprite here.
+                // Set selected Character here.
+                gameplayerInstance.GetPlayerInfo().SetCharacterName(roomPlayers[i].GetCharacterName());
+                
 
                 NetworkServer.Destroy(conn.identity.gameObject);
 

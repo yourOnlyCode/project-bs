@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2387791513854365741}
   - component: {fileID: -725345338921758119}
   m_Layer: 0
-  m_Name: Option_Hunter
+  m_Name: Option_Elyza
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,10 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005db85ca550442f99add60a50f2404f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterName: Hunter
-  _characterDescription: This is the hunter character. Take a good look, because
-    it may be the only time you see him.
-  _bigImage: {fileID: 8625259836574381877, guid: 5c34d3c3697b34b54b2a9ebf5745c7d4, type: 3}
+  _characterName: Elyza
+  _characterDescription: This is Elyza!
+  _bigImage: {fileID: 4282840456964579673, guid: 6f60cfec619d64ccda09cfdf28282b98, type: 3}
 --- !u!114 &-725345338921758119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,9 +201,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7903380526305607711, guid: 5c34d3c3697b34b54b2a9ebf5745c7d4, type: 3}
+  m_Sprite: {fileID: 4282840456964579673, guid: 6f60cfec619d64ccda09cfdf28282b98, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
