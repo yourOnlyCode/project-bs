@@ -118,7 +118,7 @@ MonoBehaviour:
   syncInterval: 0.1
   _harvestMaterial: {fileID: 5321385154467376112, guid: 117fb61d97a6a441b839aeceda464ef4, type: 3}
   _spawnPosition: {fileID: 6271093086468157154}
-  _deadSprite: {fileID: 0}
+  _deadSprite: {fileID: -7716840196277077270, guid: be4fd4b11dd144db7a4decb6d3b9ad23, type: 3}
   _launchDistance: 2.5
   _hitsPerMat: 3
   _maxHits: 9
@@ -136,10 +136,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.081483126, y: -1.417795}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.2}
     oldSize: {x: 3.1875, y: 4.8125}
     newSize: {x: 3.1875, y: 4.8125}
     adaptiveTilingThreshold: 0.5
@@ -147,7 +147,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1341414, y: 1.0643067}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &8562176051751117026
 GameObject:
@@ -173,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8562176051751117026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: -1.48, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4316510390236777859}
